@@ -6,7 +6,7 @@
 /*   By: jnuno-da <jnuno-da@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 22:36:03 by jnuno-da          #+#    #+#             */
-/*   Updated: 2024/11/23 18:12:24 by jnuno-da         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:26:28 by jnuno-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 # define BUFFER_SIZE 10
 #endif
 
-typedef struct s_list
-{
-	char			*str_buf;
-	struct	s_list	*next;
-}	t_list;
+char	*get_next_line(int fd);
+char	*ft_strchr(char *s, int c);
+char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen(char *s);
 
 # include <stdio.h>
 # include <stdlib.h>
