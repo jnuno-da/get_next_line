@@ -6,7 +6,7 @@
 /*   By: jnuno-da <jnuno-da@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 22:35:37 by jnuno-da          #+#    #+#             */
-/*   Updated: 2024/11/23 17:13:13 by jnuno-da         ###   ########.fr       */
+/*   Updated: 2024/11/29 01:06:00 by jnuno-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 char	*get_next_line(int fd)
 {
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, ))
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return(NULL);
 }

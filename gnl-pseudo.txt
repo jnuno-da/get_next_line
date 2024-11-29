@@ -1,0 +1,87 @@
+// Estrutura para armazenar o buffer de leitura
+struct buffer_node {
+    char *content;              // Conteúdo do buffer atual
+    int position;              // Posição atual no buffer
+    int bytes_read;            // Quantidade de bytes lidos
+    struct buffer_node *next;  // Próximo nó
+};
+
+// Estrutura para gerenciar o estado da leitura
+struct file_state {
+    int fd;                    // File descriptor
+    struct buffer_node *buffer;// Lista encadeada de buffers
+};
+
+// Função principal get_next_line
+function get_next_line(fd: integer) -> string {
+    static file_states: array of file_state  // Array estático para múltiplos FDs
+    current_state: file_state
+    line: string = ""
+    
+    // 1. Verificar fd e inicializar/recuperar estado
+    if (fd < 0 OR BUFFER_SIZE <= 0)
+        return NULL
+    
+    current_state = get_or_create_state(fd, file_states)
+    
+    // 2. Loop principal de leitura
+    while (true) {
+        // Se não há buffer ou chegou ao fim do buffer atual
+        if (buffer is NULL OR position >= bytes_read) {
+            // Alocar novo buffer
+            new_buffer = allocate_buffer(BUFFER_SIZE)
+            if (new_buffer == NULL)
+                return NULL
+                
+            // Ler do arquivo
+            bytes = read(fd, new_buffer->content, BUFFER_SIZE)
+            if (bytes <= 0) {
+                if (line is empty)
+                    return NULL
+                return line
+            }
+            
+            new_buffer->bytes_read = bytes
+            new_buffer->position = 0
+            add_to_buffer_list(current_state, new_buffer)
+        }
+        
+        // 3. Processar buffer atual
+        while (position < bytes_read) {
+            char = buffer->content[position]
+            position++
+            
+            append(line, char)
+            
+            if (char == '\n') {
+                return line
+            }
+        }
+    }
+}
+
+// Função auxiliar para gerenciar estados dos FDs
+function get_or_create_state(fd: integer, states: array) -> file_state {
+    // Procura estado existente
+    for each state in states {
+        if (state.fd == fd)
+            return state
+    }
+    
+    // Cria novo estado se não encontrado
+    new_state = {
+        fd: fd,
+        buffer: NULL
+    }
+    add_to_states(states, new_state)
+    return new_state
+}
+
+// Função para limpar recursos
+function clean_buffer(buffer: buffer_node) {
+    if (buffer == NULL)
+        return
+        
+    free(buffer->content)
+    free(buffer)
+}
