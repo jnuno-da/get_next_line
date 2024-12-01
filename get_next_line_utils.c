@@ -28,6 +28,7 @@ size_t	ft_strlen(char *str)
 	else
 		return (0);
 }
+
 char	*ft_strchr(char *str, int c)
 {
 	int	i;
@@ -35,13 +36,13 @@ char	*ft_strchr(char *str, int c)
 	if (!str)
 		return (0);
 	i = 0;
-	while(str[i] != c)
+	while (str[i] != c)
 	{
 		if (str[i] == '\0')
 			return (0);
 		i++;
 	}
-	return(str);
+	return (str);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
