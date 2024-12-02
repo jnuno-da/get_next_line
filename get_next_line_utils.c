@@ -6,7 +6,7 @@
 /*   By: jnuno-da <jnuno-da@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 22:36:06 by jnuno-da          #+#    #+#             */
-/*   Updated: 2024/11/29 01:05:40 by jnuno-da         ###   ########.fr       */
+/*   Updated: 2024/12/02 20:29:17 by jnuno-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,17 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		tsize;
 	char	*str;
 
-	i = -1;
+	i = 0;
 	if (!s1 || !s2)
 		return (0);
 	tsize = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	str = (char *)malloc(tsize + 1);
 	if (!str)
 		return (NULL);
-	while (s1[++i] != '\0')
+	while (s1[i] != '\0')
 	{
 		str[i] = s1[i];
+		i++;
 	}
 	j = 0;
 	while (s2[j] != '\0')

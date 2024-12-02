@@ -6,13 +6,13 @@
 /*   By: jnuno-da <jnuno-da@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 22:35:37 by jnuno-da          #+#    #+#             */
-/*   Updated: 2024/11/29 23:25:45 by jnuno-da         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:57:19 by jnuno-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*get_line(char *stash)
+char	*get_line(char *stash)
 {
 	int			i;
 	char		*str;
@@ -40,32 +40,36 @@ static char	*get_line(char *stash)
 	return (str);
 }
 
-static char	*read_file(int fd, char *stash)
+char	*read_file(int fd, char *stash)
 {
+	char	*tmp;
 	char	*buffer;
 	int		bytes_read;
 
+	if (!stash)
+	{
+		stash = malloc(sizeof(char) * 1);
+		if (!stash)
+			return (NULL);
+	}
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
-		return (NULL);
+		return (free(stash), NULL);
 	bytes_read = 1;
 	while (!ft_strchr(stash, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-		{
-			free(buffer);
-			free(stash);
-			return (NULL);
-		}
+			return (free(buffer), free(stash), NULL);
 		buffer[bytes_read] = '\0';
-		stash = ft_strjoin(stash, buffer);
+		tmp = ft_strjoin(stash, buffer);
+		free(stash);
+		stash = tmp;
 	}
-	free(buffer);
-	return (stash);
+	return (free(buffer), stash);
 }
 
-static char	*update_stash(char *stash)
+char	*update_stash(char *stash)
 {
 	int		i;
 	int		j;
@@ -81,7 +85,10 @@ static char	*update_stash(char *stash)
 	}
 	str = (char *)malloc(sizeof(char) * (ft_strlen(stash) - i + 1));
 	if (!str)
+	{
+		free(stash);
 		return (NULL);
+	}
 	i++;
 	j = 0;
 	while (stash[i])
@@ -100,8 +107,30 @@ char	*get_next_line(int fd)
 		return (NULL);
 	stash = read_file(fd, stash);
 	if (!stash)
+	{
+		free(stash);
 		return (NULL);
+	}
 	line = get_line(stash);
+	if (!line)
+	{
+		free(stash);
+		stash = NULL;
+		return (NULL);
+	}
 	stash = update_stash(stash);
 	return (line);
 }
+
+/* int main()
+{
+	char *file;
+	int fd;
+	fd = open("hello.txt", O_RDONLY);
+	while ((file = get_next_line(fd)))
+	{
+		printf("%s", file);
+		free(file);
+	}
+	return (0);
+} */
