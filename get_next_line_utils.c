@@ -6,7 +6,7 @@
 /*   By: jnuno-da <jnuno-da@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 22:36:06 by jnuno-da          #+#    #+#             */
-/*   Updated: 2024/12/02 20:29:17 by jnuno-da         ###   ########.fr       */
+/*   Updated: 2024/12/04 20:40:38 by jnuno-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,20 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*ptr;
+	size_t			i;
+
+	i = 0;
+	ptr = malloc(nmemb * size);
+	if (! ptr)
+		return (NULL);
+	while (i < nmemb * size)
+	{
+		ptr[i++] = 0;
+	}
+	return (ptr);
 }

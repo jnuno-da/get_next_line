@@ -6,13 +6,13 @@
 /*   By: jnuno-da <jnuno-da@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 22:35:37 by jnuno-da          #+#    #+#             */
-/*   Updated: 2024/12/02 22:57:19 by jnuno-da         ###   ########.fr       */
+/*   Updated: 2024/12/04 20:37:44 by jnuno-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_line(char *stash)
+char	*get_ln(char *stash)
 {
 	int			i;
 	char		*str;
@@ -48,7 +48,7 @@ char	*read_file(int fd, char *stash)
 
 	if (!stash)
 	{
-		stash = malloc(sizeof(char) * 1);
+		stash = ft_calloc(1, sizeof(char));
 		if (!stash)
 			return (NULL);
 	}
@@ -111,7 +111,7 @@ char	*get_next_line(int fd)
 		free(stash);
 		return (NULL);
 	}
-	line = get_line(stash);
+	line = get_ln(stash);
 	if (!line)
 	{
 		free(stash);
